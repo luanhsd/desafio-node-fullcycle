@@ -1,0 +1,8 @@
+# node_modules
+node/node_modules
+
+# package-lock.js
+node/package-lock.json
+
+#mysql data
+mysql/data
