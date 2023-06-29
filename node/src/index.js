@@ -15,8 +15,19 @@ const faker = new Faker({
   locale: [pt_BR]
 });
 
+function initial(connection) {
+  const initial = `create table if not exists people(
+    id int not null primary key auto_increment,
+    name varchar(255) not null
+    )`;
+  connection.query(initial);
+}
+
 app.get(`/`, (req, res) => {
   const connection = mysql.createConnection(config);
+
+  initial(connection);
+
   const insert = `INSERT INTO people(name) values ('${faker.person.fullName()}')`;
   connection.query(insert);
   const select = `SELECT * FROM people`;
@@ -32,7 +43,7 @@ app.get(`/`, (req, res) => {
     connection.end();
 
     res.send(
-      `<h1>Full Cycle</h1> <br> <ul>${people
+      `<h1>Full Cycle Rocks!</h1> <br> <ul>${people
         .map((value) => `<li>${value.name}</li>`)
         .join('')}</ul>`
     );
